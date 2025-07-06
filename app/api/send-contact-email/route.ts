@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendDualEmails } from '@/lib/email';
 
+const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Luxe Collections';
+const COMPANY_EMAIL = process.env.NEXT_PUBLIC_COMPANY_EMAIL || 'info@luxecollections.com';
+const COMPANY_PHONE = process.env.NEXT_PUBLIC_COMPANY_PHONE || '+1 (234) 567-890';
+const COMPANY_WHATSAPP = process.env.NEXT_PUBLIC_COMPANY_WHATSAPP || '+1234567890';
+const BUSINESS_HOURS = process.env.NEXT_PUBLIC_BUSINESS_HOURS || 'Monday-Friday 9AM-6PM';
+
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
@@ -41,7 +47,7 @@ export async function POST(request: NextRequest) {
       <p>Dear ${data.name},</p>
       
       <div class="field">
-        <p>Thank you for contacting Luxe Collections! We've received your message and our team will get back to you within 24 hours with personalized recommendations and answers to your questions.</p>
+        <p>Thank you for contacting ${COMPANY_NAME}! We've received your message and our team will get back to you within 24 hours with personalized recommendations and answers to your questions.</p>
       </div>
 
       <p><strong>Your Message Summary:</strong></p>
@@ -53,10 +59,10 @@ export async function POST(request: NextRequest) {
 
       <div class="field">
         <h3 style="color: #D4AF37; margin-bottom: 15px;">Contact Information</h3>
-        <p><strong>Email:</strong> info@luxecollections.com</p>
-        <p><strong>Phone:</strong> +1 (234) 567-890</p>
-        <p><strong>WhatsApp:</strong> +1 (234) 567-890</p>
-        <p><strong>Hours:</strong> Monday-Friday 9AM-6PM</p>
+        <p><strong>Email:</strong> ${COMPANY_EMAIL}</p>
+        <p><strong>Phone:</strong> ${COMPANY_PHONE}</p>
+        <p><strong>WhatsApp:</strong> ${COMPANY_WHATSAPP}</p>
+        <p><strong>Hours:</strong> ${BUSINESS_HOURS}</p>
       </div>
 
       <p>In the meantime, feel free to browse our collections:</p>
@@ -70,9 +76,9 @@ export async function POST(request: NextRequest) {
 
     const result = await sendDualEmails(
       data.email,
-      'New Contact Form Submission - Luxe Collections',
+      `New Contact Form Submission - ${COMPANY_NAME}`,
       adminContent,
-      'Thank You for Contacting Luxe Collections',
+      `Thank You for Contacting ${COMPANY_NAME}`,
       customerContent
     );
 

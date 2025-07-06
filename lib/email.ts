@@ -1,18 +1,22 @@
 import nodemailer from 'nodemailer';
 
-// Email configuration - In production, these should be environment variables
+// Email configuration using environment variables
 const EMAIL_CONFIG = {
-  service: 'gmail',
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
+  host: process.env.SMTP_HOST || 'smtp.gmail.com',
+  port: parseInt(process.env.SMTP_PORT || '587'),
+  secure: process.env.SMTP_SECURE === 'true',
   auth: {
-    user: 'luxecollections.demo@gmail.com', // Replace with your email
-    pass: 'your-app-password-here' // Replace with your Gmail app password
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS
   }
 };
 
-const ADMIN_EMAIL = 'admin@luxecollections.com';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@luxecollections.com';
+const COMPANY_NAME = process.env.COMPANY_NAME || 'Luxe Collections';
+const COMPANY_EMAIL = process.env.COMPANY_EMAIL || 'info@luxecollections.com';
+const COMPANY_PHONE = process.env.COMPANY_PHONE || '+1 (234) 567-890';
+const COMPANY_ADDRESS = process.env.COMPANY_ADDRESS || '123 Luxury Lane, Premium City, PC 12345';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://luxecollections.com';
 
 // Create transporter
 const createTransporter = () => {
@@ -96,20 +100,21 @@ export const createEmailTemplate = (content: string, title: string) => `
   <body>
     <div class="container">
       <div class="header">
-        <div class="logo">🎁 Luxe Collections</div>
+        <div class="logo">🎁 ${COMPANY_NAME}</div>
         <p>Premium Hampers & Handcrafted Jewelry</p>
       </div>
       <div class="content">
         ${content}
       </div>
       <div class="footer">
-        <p>Thank you for choosing Luxe Collections!</p>
+        <p>Thank you for choosing ${COMPANY_NAME}!</p>
         <p>Creating extraordinary moments, one gift at a time.</p>
         <p>
           <strong>Contact Us:</strong><br>
-          Email: info@luxecollections.com<br>
-          Phone: +1 (234) 567-890<br>
-          Website: luxecollections.com
+          Email: ${COMPANY_EMAIL}<br>
+          Phone: ${COMPANY_PHONE}<br>
+          Address: ${COMPANY_ADDRESS}<br>
+          Website: ${SITE_URL}
         </p>
       </div>
     </div>
@@ -123,7 +128,7 @@ export const sendEmail = async (to: string, subject: string, htmlContent: string
     const transporter = createTransporter();
     
     const mailOptions = {
-      from: `"Luxe Collections" <${EMAIL_CONFIG.auth.user}>`,
+      from: `"${COMPANY_NAME}" <${EMAIL_CONFIG.auth.user}>`,
       to,
       subject,
       html: htmlContent

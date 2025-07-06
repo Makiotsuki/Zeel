@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendDualEmails } from '@/lib/email';
 
+const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Luxe Collections';
+const CUSTOM_EMAIL = process.env.CUSTOM_EMAIL || 'custom@luxecollections.com';
+const COMPANY_PHONE = process.env.NEXT_PUBLIC_COMPANY_PHONE || '+1 (234) 567-890';
+const COMPANY_WHATSAPP = process.env.NEXT_PUBLIC_COMPANY_WHATSAPP || '+1234567890';
+
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
@@ -69,7 +74,7 @@ export async function POST(request: NextRequest) {
       
       <div class="field">
         <h3 style="color: #D4AF37; margin-bottom: 15px;">Thank You for Your Custom Request!</h3>
-        <p>We're thrilled that you've chosen Luxe Collections to create your custom ${data.jewelryType.toLowerCase()}. Our master craftsmen are excited to bring your vision to life with meticulous attention to detail and exceptional artistry.</p>
+        <p>We're thrilled that you've chosen ${COMPANY_NAME} to create your custom ${data.jewelryType.toLowerCase()}. Our master craftsmen are excited to bring your vision to life with meticulous attention to detail and exceptional artistry.</p>
       </div>
 
       <div class="field" style="background: #FEFCF9;">
@@ -109,17 +114,17 @@ export async function POST(request: NextRequest) {
       <div class="field">
         <h3 style="color: #D4AF37; margin-bottom: 15px;">Contact Information</h3>
         <p>Our design team will be in touch soon, but if you have any immediate questions:</p>
-        <p><strong>Email:</strong> custom@luxecollections.com</p>
-        <p><strong>Phone:</strong> +1 (234) 567-890</p>
-        <p><strong>WhatsApp:</strong> +1 (234) 567-890</p>
+        <p><strong>Email:</strong> ${CUSTOM_EMAIL}</p>
+        <p><strong>Phone:</strong> ${COMPANY_PHONE}</p>
+        <p><strong>WhatsApp:</strong> ${COMPANY_WHATSAPP}</p>
       </div>
     `;
 
     const result = await sendDualEmails(
       data.email,
-      'New Custom Jewelry Request - Luxe Collections',
+      `New Custom Jewelry Request - ${COMPANY_NAME}`,
       adminContent,
-      'Your Custom Jewelry Request - Luxe Collections',
+      `Your Custom Jewelry Request - ${COMPANY_NAME}`,
       customerContent
     );
 

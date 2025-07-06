@@ -9,6 +9,8 @@ const Newsletter = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Luxe Collections';
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -108,19 +110,19 @@ const Newsletter = () => {
               <div className="text-sm text-gray-400">Follow us on:</div>
               <div className="flex space-x-4">
                 <a
-                  href="#"
+                  href={process.env.NEXT_PUBLIC_FACEBOOK_URL || '#'}
                   className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#D4AF37] transition-colors duration-300"
                 >
                   <span className="text-sm font-bold">f</span>
                 </a>
                 <a
-                  href="#"
+                  href={process.env.NEXT_PUBLIC_TWITTER_URL || '#'}
                   className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#D4AF37] transition-colors duration-300"
                 >
                   <span className="text-sm font-bold">@</span>
                 </a>
                 <a
-                  href="#"
+                  href={process.env.NEXT_PUBLIC_INSTAGRAM_URL || '#'}
                   className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#D4AF37] transition-colors duration-300"
                 >
                   <span className="text-sm font-bold">in</span>

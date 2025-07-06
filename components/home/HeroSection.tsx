@@ -5,6 +5,8 @@ import Link from "next/link";
 import { ArrowRight, Star, Heart, Gift } from "lucide-react";
 
 const HeroSection = () => {
+  const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Luxe Collections';
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}

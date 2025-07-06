@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendDualEmails } from '@/lib/email';
 
+const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Luxe Collections';
+
 export async function POST(request: NextRequest) {
   try {
     const { email } = await request.json();
@@ -14,7 +16,7 @@ export async function POST(request: NextRequest) {
         <p><strong>Subscription Date:</strong> ${new Date().toLocaleDateString()}</p>
         <p><strong>Source:</strong> Website Newsletter Signup</p>
       </div>
-      <p>A new customer has subscribed to the Luxe Collections newsletter. Please add them to the mailing list and send a welcome email.</p>
+      <p>A new customer has subscribed to the ${COMPANY_NAME} newsletter. Please add them to the mailing list and send a welcome email.</p>
     `;
 
     // Welcome email content
@@ -23,7 +25,7 @@ export async function POST(request: NextRequest) {
       
       <div class="field">
         <h2 style="color: #D4AF37; margin-bottom: 15px;">Thank You for Subscribing!</h2>
-        <p>Welcome to the Luxe Collections family! You're now part of an exclusive community of luxury enthusiasts who appreciate the finest hampers and handcrafted jewelry.</p>
+        <p>Welcome to the ${COMPANY_NAME} family! You're now part of an exclusive community of luxury enthusiasts who appreciate the finest hampers and handcrafted jewelry.</p>
       </div>
 
       <div class="field">
@@ -72,9 +74,9 @@ export async function POST(request: NextRequest) {
 
     const result = await sendDualEmails(
       email,
-      'New Newsletter Subscription - Luxe Collections',
+      `New Newsletter Subscription - ${COMPANY_NAME}`,
       adminContent,
-      'Welcome to Luxe Collections Newsletter',
+      `Welcome to ${COMPANY_NAME} Newsletter`,
       welcomeContent
     );
 

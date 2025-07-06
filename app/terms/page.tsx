@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import { FileText, ShoppingCart, Shield, AlertCircle } from 'lucide-react';
 
 const TermsPage = () => {
+  const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Luxe Collections';
+  const LEGAL_EMAIL = process.env.LEGAL_EMAIL || 'legal@luxecollections.com';
+  const COMPANY_PHONE = process.env.NEXT_PUBLIC_COMPANY_PHONE || '+1 (234) 567-890';
+
   const sections = [
     {
       title: 'Acceptance of Terms',
@@ -199,10 +203,10 @@ const TermsPage = () => {
             </p>
             <div className="space-y-4">
               <p className="text-gray-300">
-                Email: <a href="mailto:legal@luxecollections.com" className="text-[#D4AF37] hover:underline">legal@luxecollections.com</a>
+                Email: <a href={`mailto:${LEGAL_EMAIL}`} className="text-[#D4AF37] hover:underline">{LEGAL_EMAIL}</a>
               </p>
               <p className="text-gray-300">
-                Phone: <a href="tel:+1234567890" className="text-[#D4AF37] hover:underline">+1 (234) 567-890</a>
+                Phone: <a href={`tel:${COMPANY_PHONE.replace(/\D/g, '')}`} className="text-[#D4AF37] hover:underline">{COMPANY_PHONE}</a>
               </p>
             </div>
           </motion.div>

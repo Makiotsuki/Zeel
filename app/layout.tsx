@@ -3,15 +3,31 @@ import type { Metadata } from 'next';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
+const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Luxe Collections';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://luxecollections.com';
+
 export const metadata: Metadata = {
-  title: 'Luxury Hampers & Handcrafted Jewelry | Premium Gift Collections',
+  title: `${COMPANY_NAME} | Premium Hampers & Handcrafted Jewelry`,
   description: 'Discover exquisite handcrafted hampers and jewelry. From chocolate collections to custom engagement trays, create unforgettable moments with our premium gift solutions.',
   keywords: 'luxury hampers, handcrafted jewelry, premium gifts, chocolate hampers, engagement trays, custom jewelry, anniversary gifts, birthday collections',
-  authors: [{ name: 'Luxury Hampers & Jewelry' }],
+  authors: [{ name: COMPANY_NAME }],
   openGraph: {
-    title: 'Luxury Hampers & Handcrafted Jewelry',
+    title: `${COMPANY_NAME} | Premium Hampers & Handcrafted Jewelry`,
     description: 'Premium gift collections featuring exquisite hampers and handcrafted jewelry',
     type: 'website',
+    url: SITE_URL,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${COMPANY_NAME} | Premium Hampers & Handcrafted Jewelry`,
+    description: 'Premium gift collections featuring exquisite hampers and handcrafted jewelry',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: SITE_URL,
   },
 };
 

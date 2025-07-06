@@ -9,6 +9,9 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Luxe Collections';
+  const COMPANY_WHATSAPP = process.env.NEXT_PUBLIC_COMPANY_WHATSAPP || '+1234567890';
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -43,7 +46,7 @@ const Header = () => {
               <Heart className="h-4 w-4 text-[#8B7355] absolute -top-1 -right-1" />
             </div>
             <span className="text-2xl font-playfair font-bold text-gradient">
-              Luxe Collections
+              {COMPANY_NAME}
             </span>
           </Link>
 
@@ -64,7 +67,7 @@ const Header = () => {
           {/* Contact Button & Mobile Menu */}
           <div className="flex items-center space-x-4">
             <a
-              href="https://wa.me/1234567890"
+              href={`https://wa.me/${COMPANY_WHATSAPP.replace(/\D/g, '')}`}
               className="hidden sm:flex items-center space-x-2 bg-[#25D366] hover:bg-[#128C7E] text-white px-4 py-2 rounded-lg transition-colors duration-300"
             >
               <MessageCircle className="h-4 w-4" />
@@ -102,7 +105,7 @@ const Header = () => {
                   </Link>
                 ))}
                 <a
-                  href="https://wa.me/1234567890"
+                  href={`https://wa.me/${COMPANY_WHATSAPP.replace(/\D/g, '')}`}
                   className="flex items-center space-x-2 bg-[#25D366] hover:bg-[#128C7E] text-white px-4 py-2 rounded-lg transition-colors duration-300 w-fit"
                 >
                   <MessageCircle className="h-4 w-4" />

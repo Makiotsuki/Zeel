@@ -5,6 +5,14 @@ import { motion } from 'framer-motion';
 import { Gift, Heart, Mail, Phone, MapPin, Instagram, Facebook, Twitter } from 'lucide-react';
 
 const Footer = () => {
+  const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Luxe Collections';
+  const COMPANY_EMAIL = process.env.NEXT_PUBLIC_COMPANY_EMAIL || 'info@luxecollections.com';
+  const COMPANY_PHONE = process.env.NEXT_PUBLIC_COMPANY_PHONE || '+1 (234) 567-890';
+  const COMPANY_ADDRESS = process.env.NEXT_PUBLIC_COMPANY_ADDRESS || '123 Luxury Lane, Premium City';
+  const INSTAGRAM_URL = process.env.NEXT_PUBLIC_INSTAGRAM_URL || '#';
+  const FACEBOOK_URL = process.env.NEXT_PUBLIC_FACEBOOK_URL || '#';
+  const TWITTER_URL = process.env.NEXT_PUBLIC_TWITTER_URL || '#';
+
   const quickLinks = [
     { name: 'Chocolate Hampers', href: '/hampers/chocolate' },
     { name: 'Engagement Trays', href: '/hampers/engagement' },
@@ -36,7 +44,7 @@ const Footer = () => {
                 <Heart className="h-4 w-4 text-[#8B7355] absolute -top-1 -right-1" />
               </div>
               <span className="text-2xl font-playfair font-bold text-gradient">
-                Luxe Collections
+                {COMPANY_NAME}
               </span>
             </Link>
             <p className="text-gray-400 leading-relaxed">
@@ -44,13 +52,13 @@ const Footer = () => {
               Each piece tells a story of elegance and thoughtful curation.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-[#D4AF37] transition-colors duration-300">
+              <a href={INSTAGRAM_URL} className="text-gray-400 hover:text-[#D4AF37] transition-colors duration-300">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-[#D4AF37] transition-colors duration-300">
+              <a href={FACEBOOK_URL} className="text-gray-400 hover:text-[#D4AF37] transition-colors duration-300">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-[#D4AF37] transition-colors duration-300">
+              <a href={TWITTER_URL} className="text-gray-400 hover:text-[#D4AF37] transition-colors duration-300">
                 <Twitter className="h-5 w-5" />
               </a>
             </div>
@@ -112,17 +120,17 @@ const Footer = () => {
           >
             <h3 className="text-lg font-playfair font-semibold text-[#D4AF37]">Get in Touch</h3>
             <div className="space-y-3">
-              <a href="mailto:info@luxecollections.com" className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors duration-300">
+              <a href={`mailto:${COMPANY_EMAIL}`} className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors duration-300">
                 <Mail className="h-4 w-4" />
-                <span>info@luxecollections.com</span>
+                <span>{COMPANY_EMAIL}</span>
               </a>
-              <a href="tel:+1234567890" className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors duration-300">
+              <a href={`tel:${COMPANY_PHONE.replace(/\D/g, '')}`} className="flex items-center space-x-3 text-gray-400 hover:text-white transition-colors duration-300">
                 <Phone className="h-4 w-4" />
-                <span>+1 (234) 567-890</span>
+                <span>{COMPANY_PHONE}</span>
               </a>
               <div className="flex items-center space-x-3 text-gray-400">
                 <MapPin className="h-4 w-4" />
-                <span>123 Luxury Lane, Premium City</span>
+                <span>{COMPANY_ADDRESS}</span>
               </div>
             </div>
           </motion.div>
@@ -137,7 +145,7 @@ const Footer = () => {
           className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
         >
           <p className="text-gray-400 text-sm">
-            © 2025 Luxe Collections. All rights reserved.
+            © 2025 {COMPANY_NAME}. All rights reserved.
           </p>
           <div className="flex space-x-6 text-sm">
             <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors duration-300">

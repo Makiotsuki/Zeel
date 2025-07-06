@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import { Shield, Eye, Lock, UserCheck } from 'lucide-react';
 
 const PrivacyPage = () => {
+  const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || 'Luxe Collections';
+  const PRIVACY_EMAIL = process.env.PRIVACY_EMAIL || 'privacy@luxecollections.com';
+  const COMPANY_PHONE = process.env.NEXT_PUBLIC_COMPANY_PHONE || '+1 (234) 567-890';
+
   const sections = [
     {
       title: 'Information We Collect',
@@ -189,10 +193,10 @@ const PrivacyPage = () => {
             </p>
             <div className="space-y-4">
               <p className="text-gray-300">
-                Email: <a href="mailto:privacy@luxecollections.com" className="text-[#D4AF37] hover:underline">privacy@luxecollections.com</a>
+                Email: <a href={`mailto:${PRIVACY_EMAIL}`} className="text-[#D4AF37] hover:underline">{PRIVACY_EMAIL}</a>
               </p>
               <p className="text-gray-300">
-                Phone: <a href="tel:+1234567890" className="text-[#D4AF37] hover:underline">+1 (234) 567-890</a>
+                Phone: <a href={`tel:${COMPANY_PHONE.replace(/\D/g, '')}`} className="text-[#D4AF37] hover:underline">{COMPANY_PHONE}</a>
               </p>
             </div>
           </motion.div>
