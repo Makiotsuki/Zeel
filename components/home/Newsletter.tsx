@@ -13,12 +13,27 @@ const Newsletter = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubscribed(true);
+    try {
+      const response = await fetch('/api/send-newsletter-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setIsSubscribed(true);
+        setEmail('');
+      } else {
+        throw new Error('Failed to subscribe');
+      }
+    } catch (error) {
+      console.error('Error subscribing to newsletter:', error);
+      alert('There was an error subscribing to the newsletter. Please try again.');
+    } finally {
       setIsLoading(false);
-      setEmail('');
-    }, 1000);
+    }
   };
 
   return (

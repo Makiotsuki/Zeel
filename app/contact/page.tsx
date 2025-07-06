@@ -28,13 +28,27 @@ const ContactPage = () => {
   const onSubmit = async (data: ContactForm) => {
     setIsLoading(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      console.log('Contact form data:', data);
-      setIsSubmitted(true);
+    try {
+      const response = await fetch('/api/send-contact-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        reset();
+      } else {
+        throw new Error('Failed to send email');
+      }
+    } catch (error) {
+      console.error('Error sending contact email:', error);
+      alert('There was an error sending your message. Please try again.');
+    } finally {
       setIsLoading(false);
-      reset();
-    }, 1500);
+    }
   };
 
   const contactInfo = [

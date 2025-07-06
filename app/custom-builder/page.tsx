@@ -12,6 +12,12 @@ const CustomBuilderPage = () => {
     packaging: 'standard',
     delivery: 'standard'
   });
+  const [customerInfo, setCustomerInfo] = useState({
+    name: '',
+    email: ''
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const hamperItems = [
     { id: 1, name: 'Belgian Dark Chocolate', price: 25, category: 'chocolate' },
@@ -60,6 +66,53 @@ const CustomBuilderPage = () => {
     return selectedItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   };
 
+  const handleRequestQuote = async () => {
+    if (selectedItems.length === 0) {
+      alert('Please select at least one item before requesting a quote.');
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      const quoteData = {
+        customerName: customerInfo.name,
+        customerEmail: customerInfo.email,
+        category: selectedCategory,
+        selectedItems,
+        customization,
+        totalPrice: getTotalPrice()
+      };
+
+      const response = await fetch('/api/send-custom-builder-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(quoteData),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        // Reset form
+        setSelectedItems([]);
+        setCustomization({
+          message: '',
+          packaging: 'standard',
+          delivery: 'standard'
+        });
+        setCustomerInfo({ name: '', email: '' });
+      } else {
+        throw new Error('Failed to send quote request');
+      }
+    } catch (error) {
+      console.error('Error sending quote request:', error);
+      alert('There was an error sending your quote request. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="pt-20">
       {/* Hero Section */}
@@ -80,6 +133,34 @@ const CustomBuilderPage = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Success Message */}
+      {isSubmitted && (
+        <section className="py-8 bg-green-50">
+          <div className="container">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center p-6 bg-green-100 rounded-2xl border border-green-200 max-w-2xl mx-auto"
+            >
+              <div className="text-green-600 text-4xl mb-4">✅</div>
+              <h3 className="text-2xl font-playfair font-bold text-green-800 mb-2">
+                Quote Request Sent Successfully!
+              </h3>
+              <p className="text-green-700 leading-relaxed">
+                Thank you for your custom request. Our team will review your requirements 
+                and get back to you within 24 hours with a detailed quote and timeline.
+              </p>
+              <button
+                onClick={() => setIsSubmitted(false)}
+                className="mt-4 text-green-600 hover:text-green-800 font-medium transition-colors duration-300"
+              >
+                Create Another Custom Order
+              </button>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* Builder Interface */}
       <section className="section-padding bg-white">
@@ -119,6 +200,39 @@ const CustomBuilderPage = () => {
                     <span className="font-medium">Custom Jewelry</span>
                   </div>
                 </button>
+              </div>
+
+              {/* Customer Information */}
+              <div className="space-y-4 pt-6 border-t border-gray-200">
+                <h3 className="text-lg font-playfair font-semibold text-[#2C1810]">
+                  Your Information
+                </h3>
+                
+                <div>
+                  <label className="block text-sm font-medium text-[#2C1810] mb-2">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    value={customerInfo.name}
+                    onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
+                    placeholder="Your name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#2C1810] mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    value={customerInfo.email}
+                    onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
               </div>
 
               {/* Customization Options */}
@@ -245,9 +359,22 @@ const CustomBuilderPage = () => {
                     <span className="text-[#D4AF37]">${getTotalPrice()}</span>
                   </div>
                   
-                  <button className="w-full btn-primary flex items-center justify-center space-x-2">
-                    <ShoppingCart className="h-5 w-5" />
-                    <span>Request Quote</span>
+                  <button 
+                    onClick={handleRequestQuote}
+                    disabled={isLoading}
+                    className="w-full btn-primary flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                        <span>Sending Request...</span>
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingCart className="h-5 w-5" />
+                        <span>Request Quote</span>
+                      </>
+                    )}
                   </button>
                   
                   <p className="text-xs text-[#5D4E37] text-center">
