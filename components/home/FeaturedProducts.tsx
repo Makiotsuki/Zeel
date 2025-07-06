@@ -12,7 +12,8 @@ const FeaturedProducts = () => {
       category: 'Hampers',
       description: 'Artisan chocolates from Belgium and Switzerland',
       image: 'https://images.pexels.com/photos/918327/pexels-photo-918327.jpeg?auto=compress&cs=tinysrgb&w=500',
-      featured: true
+      featured: true,
+      href: '/hampers/chocolate'
     },
     {
       id: 2,
@@ -20,7 +21,8 @@ const FeaturedProducts = () => {
       category: 'Jewelry',
       description: 'Handcrafted couple bracelet with magnetic closure',
       image: 'https://images.pexels.com/photos/1191536/pexels-photo-1191536.jpeg?auto=compress&cs=tinysrgb&w=500',
-      featured: true
+      featured: true,
+      href: '/jewelry/bracelets'
     },
     {
       id: 3,
@@ -28,7 +30,8 @@ const FeaturedProducts = () => {
       category: 'Hampers',
       description: 'Perfect combination for your special moment',
       image: 'https://images.pexels.com/photos/1120582/pexels-photo-1120582.jpeg?auto=compress&cs=tinysrgb&w=500',
-      featured: true
+      featured: true,
+      href: '/hampers/engagement'
     },
     {
       id: 4,
@@ -36,7 +39,8 @@ const FeaturedProducts = () => {
       category: 'Jewelry',
       description: 'Delicate gold-plated butterfly pendant',
       image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=500',
-      featured: true
+      featured: true,
+      href: '/jewelry/necklaces'
     },
     {
       id: 5,
@@ -44,7 +48,8 @@ const FeaturedProducts = () => {
       category: 'Hampers',
       description: 'Curated selection for milestone celebrations',
       image: 'https://images.pexels.com/photos/264547/pexels-photo-264547.jpeg?auto=compress&cs=tinysrgb&w=500',
-      featured: true
+      featured: true,
+      href: '/hampers/anniversary'
     },
     {
       id: 6,
@@ -52,7 +57,8 @@ const FeaturedProducts = () => {
       category: 'Jewelry',
       description: 'Bracelet and earrings with protective charm',
       image: 'https://images.pexels.com/photos/1927370/pexels-photo-1927370.jpeg?auto=compress&cs=tinysrgb&w=500',
-      featured: true
+      featured: true,
+      href: '/jewelry/accessories'
     }
   ];
 
@@ -122,7 +128,7 @@ const FeaturedProducts = () => {
                     {product.description}
                   </p>
                   <Link
-                    href={`/products/${product.id}`}
+                    href={product.href}
                     className="inline-flex items-center text-[#8B7355] hover:text-[#D4AF37] font-medium transition-colors duration-300"
                   >
                     View Details
